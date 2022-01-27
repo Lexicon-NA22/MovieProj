@@ -15,6 +15,6 @@ namespace MovieProj.Data
         {
         }
 
-        public DbSet<MovieProj.Models.Entities.Movie> Movie { get; set; }
+        public DbSet<Movie> Movie { get; set; }
     }
 }

@@ -4,7 +4,10 @@ using MovieProj.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MovieProjContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MovieProjContext")));
+    options.UseSqlServer(builder.Configuration
+           .GetConnectionString("MovieProjContext"))
+           .LogTo(Console.WriteLine, LogLevel.Information)
+           .EnableSensitiveDataLogging());
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
