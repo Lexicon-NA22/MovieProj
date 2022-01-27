@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MovieProjContext>(options =>
     options.UseSqlServer(builder.Configuration
            .GetConnectionString("MovieProjContext"))
-           .LogTo(Console.WriteLine, LogLevel.Information)
+           //.LogTo(Console.WriteLine, LogLevel.Information)
            .EnableSensitiveDataLogging());
 
 // Add services to the container.
