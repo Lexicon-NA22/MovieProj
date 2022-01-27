@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MovieProj.Data;
+using MovieProj.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MovieProjContext>(options =>
@@ -8,6 +10,8 @@ builder.Services.AddDbContext<MovieProjContext>(options =>
            .GetConnectionString("MovieProjContext"))
            //.LogTo(Console.WriteLine, LogLevel.Information)
            .EnableSensitiveDataLogging());
+
+builder.Services.AddScoped<IGenreSelectListService, GenreSelectListService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

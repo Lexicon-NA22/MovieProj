@@ -36,6 +36,16 @@ namespace MovieProj.Controllers
             };
 
             return View(model);
+        } 
+        
+        public async Task<IActionResult> Index3()
+        {
+            var model = new IndexViewModel2
+            {
+                Movies = await db.Movie.ToListAsync()
+            };
+
+            return View(model);
         }
 
         private async Task<IEnumerable<SelectListItem>> GetGenresAsync()
@@ -62,6 +72,43 @@ namespace MovieProj.Controllers
                              model.Where(m => (int)m.Genre == genre);
 
             return View(nameof(Index), await model.ToListAsync());
+        } 
+        
+        public async Task<IActionResult> Filter2(IndexViewModel viewModel)
+        {
+            var movies = string.IsNullOrWhiteSpace(viewModel.Title) ?
+                                    db.Movie :
+                                    db.Movie.Where(m => m.Title.StartsWith(viewModel.Title));
+
+            movies = viewModel.Genre == null ?
+                             movies : 
+                             movies.Where(m => m.Genre == viewModel.Genre);
+
+            var model = new IndexViewModel
+            {
+                Movies = await movies.ToListAsync(),
+                Genres = await GetGenresAsync()
+            };
+
+            return View(nameof(Index2), model);
+        } 
+        
+        public async Task<IActionResult> Filter3(IndexViewModel2 viewModel)
+        {
+            var movies = string.IsNullOrWhiteSpace(viewModel.Title) ?
+                                    db.Movie :
+                                    db.Movie.Where(m => m.Title.StartsWith(viewModel.Title));
+
+            movies = viewModel.Genre == null ?
+                             movies : 
+                             movies.Where(m => m.Genre == viewModel.Genre);
+
+            var model = new IndexViewModel2
+            {
+                Movies = await movies.ToListAsync()
+            };
+
+            return View(nameof(Index3), model);
         }
 
         // GET: Movies/Details/5
