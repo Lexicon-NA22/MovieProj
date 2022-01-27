@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MovieProj.Data;
 using MovieProj.Models.Entities;
+using MovieProj.Models.ViewModels;
 
 namespace MovieProj.Controllers
 {
@@ -24,6 +25,30 @@ namespace MovieProj.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await db.Movie.ToListAsync());
+        }       
+        
+        public async Task<IActionResult> Index2()
+        {
+            var model = new IndexViewModel
+            {
+                Movies = await db.Movie.ToListAsync(),
+                Genres = await GetGenresAsync()
+            };
+
+            return View(model);
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetGenresAsync()
+        {
+            return await db.Movie
+                           .Select(m => m.Genre)
+                           .Distinct()
+                           .Select(g => new SelectListItem
+                           {
+                               Text = g.ToString(),
+                               Value = g.ToString()
+                           })
+                           .ToListAsync();
         }
 
         public async Task<IActionResult> Filter(string title, int? genre)

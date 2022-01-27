@@ -10,7 +10,7 @@ namespace MovieProj.Data
 {
     public class MovieProjContext : DbContext
     {
-        public DbSet<Movie> Movie { get; set; }
+        public DbSet<Movie> Movie  { get; set; } //=> Set<Movie>();
         public MovieProjContext (DbContextOptions<MovieProjContext> options)
             : base(options)
         {
